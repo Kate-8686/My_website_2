@@ -10,6 +10,39 @@
       padding: 0;
       box-sizing: border-box;
     }
+	.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.93);
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  backdrop-filter: blur(4px);
+}
+
+.nav-btn {
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #ff758c, #ff7eb3);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(255, 117, 140, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.nav-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(255, 117, 140, 0.6);
+}
 
     body, html {
       height: 100%;
@@ -33,6 +66,7 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
+	  padding-top: 80px;
       opacity: 0;
       transition: opacity 1.5s ease-in-out;
     }
@@ -219,6 +253,16 @@
   </style>
 </head>
 <body>
+ <!-- Fixed Navigation Bar -->
+  <div class="navbar">
+    <button class="nav-btn" onclick="document.querySelector('#about').scrollIntoView({behavior: 'smooth', block: 'start'})">Обо мне</button>
+    <button class="nav-btn" onclick="document.querySelector('#approach').scrollIntoView({behavior: 'smooth', block: 'start'})">Подход</button>
+    <button class="nav-btn" onclick="document.querySelector('#prices').scrollIntoView({behavior: 'smooth', block: 'start'})">Форматы и цены</button>
+    <button class="nav-btn" onclick="document.querySelector('#schedule').scrollIntoView({behavior: 'smooth', block: 'start'})">Расписание</button>
+    <button class="nav-btn" onclick="document.querySelector('#faq').scrollIntoView({behavior: 'smooth', block: 'start'})">FAQ</button>
+    <button class="nav-btn" onclick="document.querySelector('.contact').scrollIntoView({behavior: 'smooth', block: 'start'})">Контакты</button>
+  </div>
+  
   <canvas id="canvas"></canvas>
 
   <div class="container" id="container">
@@ -230,10 +274,10 @@
       <button class="btn" onclick="alert('Свяжитесь со мной по email: tutor@example.com')">Записаться на пробный урок</button>
     </header>
 
-    <div class="hero">
+    <div class="hero" id="about">
       <div class="photo-frame">
         <!-- Замени src на путь к своему фото -->
-        <img src="https://via.placeholder.com/250x250/e0e0e0/999999?text=Фото" alt="Фото преподавателя">
+        <img src="https://i.postimg.cc/MZFWtG5w/photo.jpg" alt="Фото преподавателя">
       </div>
       <div class="about">
         <h2>Обо мне</h2>
@@ -253,8 +297,8 @@
       </div>
     </div>
 
-    <div class="section">
-      <h2>Цены</h2>
+    <div class="section" id="prices">
+  <h2>Цены</h2>
       <div class="prices">
         <div class="price-card">
           <h3>Индивидуально (дети и взрослые)</h3>
@@ -282,7 +326,34 @@
       </div>
     </div>
 
-    <div class="contact">
+    <!-- Подход -->
+<div class="section" id="approach">
+  <h2>Мой подход</h2>
+  <div class="requirements">
+    <p>Здесь — кратко о твоём методе. Например: упор на разговорную речь, грамматика в контексте, индивидуальный подход.</p>
+  </div>
+</div>
+
+<!-- Расписание -->
+<div class="section" id="schedule">
+  <h2>Расписание</h2>
+  <div class="requirements">
+    <p>Занятия проходят ежедневно. График подбирается индивидуально под вас.</p>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section" id="faq">
+  <h2>Частые вопросы</h2>
+  <div class="requirements">
+    <ul>
+      <li>Можно ли перенести урок? — Да, при уведомлении за 24 часа.</li>
+      <li>Нужны ли учебники? — Нет, я предоставляю все материалы.</li>
+      <li>С какого уровня можно начинать? — С любого, даже с нуля!</li>
+    </ul>
+  </div>
+</div>
+	<div class="contact">
       📱 +7 (906) 318-28-25 | ✉️ ust.katerins@gmail.com
     </div>
   </div>
