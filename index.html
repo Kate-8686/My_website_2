@@ -250,6 +250,147 @@
         align-items: center;
       }
     }
+	/* === SLOT MACHINE — ВАША ЦВЕТОВАЯ ГАММА === */
+.slot-machine-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.82);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.slot-machine {
+  background: #fff9f3;
+  border: 2px solid #ffd1e0;
+  border-radius: 24px;
+  max-width: 850px;
+  width: 100%;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(249, 195, 118, 0.25);
+  position: relative;
+}
+
+.slot-content {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.slot-left,
+.slot-right {
+  flex: 1;
+  min-width: 250px;
+}
+
+.slot-reels {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  font-size: 3.2rem;
+  margin: 20px 0;
+  height: 90px;
+  align-items: center;
+}
+
+.slot-reel {
+  width: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fdf2e9;
+  border-radius: 16px;
+  box-shadow: inset 0 0 10px rgba(251, 157, 234, 0.2);
+  font-weight: bold;
+}
+
+.slot-btn {
+  padding: 12px 36px;
+  font-size: 1.25rem;
+  background: linear-gradient(45deg, #ff758c, #ff7eb3);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 12px;
+  box-shadow: 0 4px 12px rgba(255, 117, 140, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.slot-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 16px rgba(255, 117, 140, 0.55);
+}
+
+.slot-result {
+  margin-top: 25px;
+  font-size: 1.3rem;
+  min-height: 75px;
+  text-align: center;
+  font-weight: 700;
+  color: #d81b60;
+  line-height: 1.4;
+  padding: 0 10px;
+}
+
+.slot-right h3 {
+  color: #ff6b9d;
+  margin-bottom: 18px;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.prizes-list {
+  list-style: none;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.prizes-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ffe0f0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.prizes-list li:last-child {
+  border-bottom: none;
+}
+
+.prize-note {
+  margin-top: 25px;
+  padding: 18px;
+  background: #fff5fb;
+  border: 1px dashed #ffd1e0;
+  border-radius: 14px;
+  font-size: 0.98rem;
+  color: #c2185b;
+  text-align: center;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+#dev-indicator {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: #ff4757;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: none;
+  z-index: 9999;
+}
   </style>
 </head>
 <body>
@@ -261,6 +402,7 @@
     <button class="nav-btn" onclick="document.querySelector('#schedule').scrollIntoView({behavior: 'smooth', block: 'start'})">Расписание</button>
     <button class="nav-btn" onclick="document.querySelector('#faq').scrollIntoView({behavior: 'smooth', block: 'start'})">FAQ</button>
     <button class="nav-btn" onclick="document.querySelector('.contact').scrollIntoView({behavior: 'smooth', block: 'start'})">Контакты</button>
+	<button class="nav-btn" onclick="openSlotMachine()">Крутануть слот! 🎰</button>
   </div>
   
   <canvas id="canvas"></canvas>
@@ -354,10 +496,42 @@
   </div>
 </div>
 	<div class="contact">
-      📱 +7 (906) 318-28-25 | ✉️ ust.katerins@gmail.com
+      📱 +7 (906) 318-28-25 | ✉️ ust.katerina@gmail.com
     </div>
   </div>
-
+<!-- Slot Machine Modal -->
+<div class="slot-machine-container" id="slotModal">
+  <div class="slot-machine">
+    <h2>🎰 Ваш шанс выиграть подарок!</h2>
+    <div class="slot-content">
+      <div class="slot-left">
+        <div class="slot-reels">
+          <div class="slot-reel">❓</div>
+          <div class="slot-reel">❓</div>
+          <div class="slot-reel">❓</div>
+        </div>
+        <div style="text-align:center;">
+          <button class="slot-btn" onclick="spinSlot()">Крутить!</button>
+        </div>
+        <div class="slot-result" id="slotResult"></div>
+      </div>
+      <div class="slot-right">
+        <h3>🎁 Что можно выиграть:</h3>
+        <ul class="prizes-list">
+          <li>🎟️ Скидку 10% на первые 10 уроков</li>
+          <li>🆓 Бесплатный урок</li>
+          <li>📘 Полезную ПДФку</li>
+          <li>🎧 Аудиокнигу с разбором лексики</li>
+          <li>🐱 Подарок — тематический постер с котиками</li>
+        </ul>
+        <div class="prize-note">
+          💬 Полученный приз обменяйте при записи.<br>
+          Детали пришлю в обмен на сообщение!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Canvas Animation Script -->
   <script>
     const canvas = document.getElementById('canvas');
@@ -435,6 +609,102 @@
     setTimeout(() => {
       document.getElementById('container').classList.add('visible');
     }, 800);
+	// ====== SLOT MACHINE + DEV MODE ======
+let hasUsedSlot = false;
+let isDevMode = false;
+
+// Грамматически правильные формы (для фразы "Вы выиграли...")
+const prizes = [
+  { emoji: "🎟️", text: "скидку 10% на первые 10 уроков" },
+  { emoji: "🆓", text: "бесплатный урок" },
+  { emoji: "📘", text: "полезную ПДФку" },
+  { emoji: "🎧", text: "аудиокнигу с разбором лексики" },
+  { emoji: "🐱", text: "подарок — тематический постер с котиками" }
+];
+
+// Индикатор режима разработчика
+const devIndicator = document.createElement('div');
+devIndicator.id = 'dev-indicator';
+devIndicator.textContent = '🔧 DEV';
+devIndicator.style.cssText = `
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: #ff4757;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: none;
+  z-index: 9999;
+  pointer-events: none;
+`;
+document.body.appendChild(devIndicator);
+
+// Активация Dev Mode: 5 нажатий D (английская раскладка!)
+let dCount = 0;
+let dTimer = null;
+document.addEventListener('keydown', (e) => {
+  if (e.key.toLowerCase() === 'd') {
+    dCount++;
+    if (dCount >= 5) {
+      isDevMode = !isDevMode;
+      devIndicator.style.display = isDevMode ? 'block' : 'none';
+      console.log(isDevMode ? '✅ DEV MODE ON' : 'DEV MODE OFF');
+      dCount = 0;
+    }
+    clearTimeout(dTimer);
+    dTimer = setTimeout(() => dCount = 0, 1000);
+  }
+});
+
+function openSlotMachine() {
+  if (!isDevMode && hasUsedSlot) {
+    alert("Вы уже получили свой приз! 💖");
+    return;
+  }
+  document.getElementById('slotModal').style.display = 'flex';
+}
+
+function spinSlot() {
+  if (!isDevMode && hasUsedSlot) return;
+
+  const reels = document.querySelectorAll('.slot-reel');
+  const resultDiv = document.getElementById('slotResult');
+  resultDiv.innerHTML = '';
+
+  let frame = 0;
+  const totalFrames = 25;
+  const interval = setInterval(() => {
+    reels.forEach(r => {
+      const p = prizes[Math.floor(Math.random() * prizes.length)];
+      r.textContent = p.emoji;
+    });
+    frame++;
+    if (frame >= totalFrames) {
+      clearInterval(interval);
+      const prize = prizes[Math.floor(Math.random() * prizes.length)];
+      reels.forEach(r => r.textContent = prize.emoji);
+      resultDiv.innerHTML = `Поздравляем! Вы выиграли:<br><strong>${prize.text}</strong>`;
+      if (!isDevMode) {
+        hasUsedSlot = true;
+        // Скрываем кнопку в навбаре
+        const slotBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn =>
+          btn.textContent.includes('Крутануть')
+        );
+        if (slotBtn) slotBtn.style.display = 'none';
+      }
+    }
+  }, 70);
+}
+
+// Закрытие модального окна по клику вне его
+document.getElementById('slotModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('slotModal')) {
+    document.getElementById('slotModal').style.display = 'none';
+  }
+});
   </script>
 </body>
 </html>
